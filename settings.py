@@ -15,15 +15,14 @@ def init():
     global target_price_buy, target_price_sell, y_min, y_max, bounds
     global state_space, state_size, action_space, action_size, eps_decay, lr, gamma
 
-    s = 5#五个buyer和seller
+    s = 5
     b = 5
-    print(s,b)
 
     pt_params_seller = pd.read_csv('data/pt_params_seller_50.csv', index_col=0)
     #pt_params_seller = pt_params_seller.to_numpy()
     pt_params_seller = pt_params_seller[:s]
 
-    kp_s = pt_params_seller['k+']#就是论文里面提到的收益函数的参数
+    kp_s = pt_params_seller['k+']
     kn_s = pt_params_seller['k-']
     zeta_p_s = pt_params_seller['zeta+']
     zeta_n_s = pt_params_seller['zeta-']
@@ -36,8 +35,9 @@ def init():
     kn_b = pt_params_buyer['k-']
     zeta_p_b = pt_params_buyer['zeta+']
     zeta_n_b = pt_params_buyer['zeta-']
-    buyers = pd.read_csv('data/consumer_predictions_150.csv', index_col=0, header=0)
-    buyers = buyers.head(b)
+
+    buyers = pd.read_csv('data/consumer_predictions_150.csv', index_col='id', header=0)
+    buyers = buyers[:b]
     #print(buyers)
     w = buyers.to_numpy()/2 #remove /2
     #print(w[:,day])
@@ -46,7 +46,7 @@ def init():
     sellers = sellers.drop(columns = 'TYPE')
     r = sellers.to_numpy()
 
-    loss = pd.read_csv('data/oss_45_150.csv', index_col=None, header=None)
+    loss = pd.read_csv('data/loss_45_150.csv', index_col=None, header=None)
     loss = loss.to_numpy()
     loss = loss[:s, :b]
     print(loss)
@@ -166,4 +166,3 @@ def init():
     eps_decay = 0.965
     lr = 0.0001
     gamma = 0.85
-
