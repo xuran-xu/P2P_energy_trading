@@ -5,6 +5,8 @@ import de_optimizer
 
 import settings
 
+settings.init()  # Initialize global variables
+
 s = settings.s
 b = settings.b
 loss = settings.loss
